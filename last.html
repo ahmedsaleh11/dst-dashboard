@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>OSS DST Dashboard v5.0 HD</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root {
+    --bg: #16171a; --surface: #1f2025; --card: #252830; --border: #32353f;
+    --blue: #4285f4; --orange: #fbbc04; --green: #34c759; --white: #ffffff;
+    --grey: #a0a2aa; --dimgrey: #55575f; --track: #3a3c44;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Barlow', sans-serif; }
+body { background: var(--bg); color: var(--white); padding-bottom: 80px; }
+
+/* TOPBAR */
+.topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 10px 16px; display: flex; justify-content: space-between; align-items: center;
+}
+.topbar-title { font-family: 'Barlow Condensed'; font-weight: 700; font-size: 16px; color: var(--blue); }
+.topbar-ver { font-size: 9px; color: var(--dimgrey); }
+
+/* TABS */
+.tab-row { display: flex; gap: 8px; padding: 10px 16px; }
+.tab {
+    flex: 1; padding: 8px 6px; border-radius: 8px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--grey); font-weight: 600; cursor: pointer; font-size: 12px;
+}
+.tab.active { background: var(--blue); border-color: var(--blue); color: var(--white); }
+
+.view { display: none; }
+.view.active { display: block; }
+
+/* EDIT VIEW */
+.edit-wrap { padding: 0 16px; }
+.edit-kpi-row { display: flex; gap: 10px; margin-bottom: 12px; }
+.edit-kpi-box {
+    flex: 1; background: var(--surface); border: 1px solid var(--border);
+    padding: 10px 12px; border-radius: 10px; border-left: 4px solid var(--track);
+}
+.ek-label { font-size: 9px; color: var(--grey); font-weight: 700; margin-bottom: 3px; text-transform: uppercase; }
+.ek-val { font-size: 22px; font-weight: 800; font-family: 'Barlow Condensed'; }
+
+.action-row { display: flex; gap: 8px; margin-bottom: 14px; }
+.sm-btn { padding: 7px 14px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; font-size: 11px; }
+
+/* LOCK BUTTON */
+.sc-lock-btn {
+    background: var(--track); border: none; color: var(--grey);
+    padding: 4px 10px; border-radius: 6px; font-size: 10px;
+    cursor: pointer; font-weight: 800; margin-right: 8px; transition: 0.2s;
+}
+.sc-lock-btn.unlocked { background: var(--orange); color: #000; }
+
+.system-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+.sc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.sc-name-input { background: transparent; border: none; border-bottom: 1px solid var(--border); color: #fff; font-weight: 700; font-size: 13px; width: 70%; outline: none; }
+.sc-del-btn { color: var(--orange); background: none; border: none; font-weight: 800; cursor: pointer; font-size: 16px; line-height: 1; }
+.tag-row { display: flex; gap: 6px; margin-bottom: 10px; }
+.tag-input { background: var(--bg); border: 1px solid var(--border); color: var(--white); font-size: 11px; padding: 6px 8px; border-radius: 6px; flex: 1; outline: none; }
+.slider-label { font-size: 10px; display: flex; justify-content: space-between; margin-bottom: 3px; }
+
+input[type=range] { width: 100%; height: 5px; border-radius: 3px; -webkit-appearance: none; outline: none; margin-bottom: 10px; cursor: pointer; }
+input[type=range]:disabled { cursor: not-allowed; opacity: 0.3; }
+input[type=range].blue-range { background: linear-gradient(to right, var(--blue) 0%, var(--blue) var(--val), var(--track) var(--val), var(--track) 100%); }
+input[type=range].orange-range { background: linear-gradient(to right, var(--orange) 0%, var(--orange) var(--val), var(--track) var(--val), var(--track) 100%); }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 2px solid var(--bg); }
+.sc-status-preview { font-size: 9px; font-weight: 800; text-align: center; padding: 4px; border-radius: 5px; border: 1px solid; }
+
+/* DASHBOARD CANVAS */
+#dashboard-canvas { background: var(--bg); }
+.brand-header { background: #1a1b20; padding: 20px 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--blue); }
+.brand-logo-area { width: 120px; }
+.brand-logo-area img { max-width: 100%; object-fit: contain; }
+.brand-center-info { text-align: center; }
+.sys-count-badge { background: var(--blue); color: #fff; font-size: 9px; padding: 2px 8px; border-radius: 20px; font-weight: 800; display: inline-block; margin-bottom: 3px; }
+.done-badge { background: rgba(52,199,89,0.15); color: var(--green); font-size: 9px; padding: 2px 8px; border-radius: 20px; font-weight: 800; display: inline-block; margin-bottom: 3px; border: 1px solid var(--green); margin-left: 5px; }
+.brand-title-main { font-family: 'Barlow Condensed'; font-size: 26px; font-weight: 800; color: var(--white); letter-spacing: 0.5px; }
+.brand-title-main span { color: var(--blue); }
+
+/* ENHANCED CLOCK STYLES */
+.live-time-top { 
+    font-family: 'Barlow Condensed'; 
+    font-size: 14px; 
+    font-weight: 800;
+    color: var(--white); 
+    text-align: right; 
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.gauge-container { display: flex; justify-content: space-around; background: #1a1b20; padding: 14px 8px 24px; border-bottom: 1px solid var(--border); }
+.gauge-item { text-align: center; position: relative; width: 110px; }
+.gauge-svg { transform: rotate(-90deg); width: 100px; height: 100px; }
+.gauge-bg { fill: none; stroke: var(--track); stroke-width: 8; }
+.gauge-fill { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dasharray 0.6s ease; }
+.gauge-val { position: absolute; top: 44%; left: 50%; transform: translate(-50%, -50%); font-family: 'Barlow Condensed'; font-size: 22px; font-weight: 700; }
+.gauge-label { font-size: 9px; font-weight: 800; color: var(--grey); margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
+
+.cards-grid { display: grid; gap: 10px; padding: 12px; }
+.grid-2 { grid-template-columns: 1fr 1fr; }
+.grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.dash-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 11px; position: relative; border-left: 3px solid var(--track); }
+.dash-card.is-done { border-left-color: var(--green); }
+.dash-card.is-progress { border-left-color: var(--orange); }
+
+.dc-name { font-size: 11px; font-weight: 800; margin-bottom: 4px; color: var(--white); line-height: 1.2; min-height: 26px; }
+.dc-tags { display: flex; gap: 3px; margin-bottom: 7px; flex-wrap: wrap; }
+.dc-tag { font-size: 8px; background: rgba(255,255,255,0.06); padding: 2px 5px; border-radius: 3px; color: var(--grey); }
+.dc-bar-row { margin-bottom: 6px; }
+.dc-bar-label { font-size: 9px; display: flex; justify-content: space-between; margin-bottom: 3px; font-weight: 600; }
+.dc-bar-track { height: 4px; background: var(--track); border-radius: 2px; overflow: hidden; }
+.dc-bar-fill { height: 100%; border-radius: 2px; }
+.dc-status { font-size: 9px; font-weight: 800; text-align: center; padding: 5px 4px; border-radius: 5px; margin-top: 8px; border: 1px solid; letter-spacing: 0.3px; }
+.status-done { color: var(--green); border-color: var(--green); background: rgba(52,199,89,0.1); }
+.status-progress { color: var(--orange); border-color: var(--orange); background: rgba(251,188,4,0.1); }
+
+.dash-footer { padding: 12px 15px; text-align: center; font-size: 10px; font-weight: 700; color: #fff; border-top: 1px solid var(--border); background: #1a1b20; }
+
+.bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); padding: 10px 14px; display: flex; gap: 8px; z-index: 200; align-items: center; }
+.bb-btn { padding: 8px 12px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; white-space: nowrap; }
+.bb-grid { background: var(--track); color: #fff; }
+.bb-save { background: var(--blue); color: #fff; flex: 1; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-title">⚡ OSS DST MANAGER</div>
+    <div class="topbar-ver">v5.0 HD</div>
+</div>
+
+<div class="tab-row">
+    <button class="tab active" onclick="switchTab('edit')">✏️ Edit Data</button>
+    <button class="tab" onclick="switchTab('dashboard')">📊 Dashboard</button>
+</div>
+
+<div id="view-edit" class="view active">
+    <div class="edit-wrap">
+        <div class="edit-kpi-row">
+            <div class="edit-kpi-box" style="border-left-color:var(--blue)"><div class="ek-label">Avg Impl</div><div class="ek-val" id="edit-impl-total" style="color:var(--blue)">0%</div></div>
+            <div class="edit-kpi-box" style="border-left-color:var(--orange)"><div class="ek-label">Avg Test</div><div class="ek-val" id="edit-test-total" style="color:var(--orange)">0%</div></div>
+            <div class="edit-kpi-box" style="border-left-color:var(--green)"><div class="ek-label">Done</div><div class="ek-val" id="edit-done-total" style="color:var(--green)">0/0</div></div>
+        </div>
+        <div class="action-row">
+            <button class="sm-btn" style="background:var(--blue);color:#fff" onclick="addSystem()">+ Add System</button>
+            <button class="sm-btn" style="background:var(--track);color:var(--orange)" onclick="resetData()">🔄 Reset</button>
+        </div>
+        <div id="systems-list"></div>
+    </div>
+</div>
+
+<div id="view-dashboard" class="view">
+    <div id="dashboard-canvas">
+        <div class="brand-header">
+            <div class="brand-logo-area">
+                <img src="logo.png" alt="Ericsson" crossorigin="anonymous"/>
+            </div>
+            <div class="brand-center-info">
+                <div><span class="sys-count-badge" id="sys-count-label">0 SYSTEMS</span><span class="done-badge" id="done-count-label">0 DONE</span></div>
+                <div class="brand-title-main">OSS DST <span>DASHBOARD</span></div>
+                <div style="font-size:9px;color:var(--grey);margin-top:2px;font-weight:700">Etisalat MS · Ericsson</div>
+            </div>
+            <div class="live-time-top" id="live-clock">DATE: --/--/----<br>TIME: --:--:--</div>
+        </div>
+
+        <div class="gauge-container">
+            <div class="gauge-item">
+                <svg class="gauge-svg"><circle class="gauge-bg" cx="50" cy="50" r="40"/><circle id="g-impl-path" class="gauge-fill" cx="50" cy="50" r="40" stroke="var(--blue)" stroke-dasharray="0 251"/></svg>
+                <div class="gauge-val" id="g-impl-val" style="color:var(--blue)">0%</div>
+                <div class="gauge-label">Implementation</div>
+            </div>
+            <div class="gauge-item">
+                <svg class="gauge-svg"><circle class="gauge-bg" cx="50" cy="50" r="40"/><circle id="g-overall-path" class="gauge-fill" cx="50" cy="50" r="40" stroke="var(--green)" stroke-dasharray="0 251"/></svg>
+                <div class="gauge-val" id="g-overall-val" style="color:var(--green)">0%</div>
+                <div class="gauge-label">Overall</div>
+            </div>
+            <div class="gauge-item">
+                <svg class="gauge-svg"><circle class="gauge-bg" cx="50" cy="50" r="40"/><circle id="g-test-path" class="gauge-fill" cx="50" cy="50" r="40" stroke="var(--orange)" stroke-dasharray="0 251"/></svg>
+                <div class="gauge-val" id="g-test-val" style="color:var(--orange)">0%</div>
+                <div class="gauge-label">Testing</div>
+            </div>
+        </div>
+
+        <div id="cards-grid" class="cards-grid grid-2"></div>
+        <div class="dash-footer">REPORT DATE: <span id="dash-date"></span></div>
+    </div>
+</div>
+
+<div class="bottom-bar">
+    <button class="bb-btn bb-grid" onclick="toggleLayout()">⊞ <span id="grid-lbl">2-Col</span></button>
+    <button class="bb-btn bb-save" id="save-btn" onclick="saveImage()">💾 Save as Image</button>
+</div>
+
+<script>
+let data = JSON.parse(localStorage.getItem('oss_v5_data')) || [
+    "SO-EM_DSP_CSP_PMS_IPTNMS","All RDS","OSSRC ENIQ","OSSRC Servers",
+    "NEW ENM","NEW ENIQ","OLD ENIQ","ENM TX","OLD ENM",
+    "IntraComm","SIAE","ZTE-UME","ZTE-RMS","GPS","Proxiem","NEW GPS"
+].map(n => ({ name: n, impl: 0, test: 0, vendor: "Ericsson", scope: "RAN", isLocked: true }));
+
+let currentGrid = 2;
+
+function save() {
+    localStorage.setItem('oss_v5_data', JSON.stringify(data));
+    updateAverages();
+}
+
+function updateClock() {
+    const now = new Date();
+    const d = now.toLocaleDateString('en-GB');
+    const t = now.toLocaleTimeString('en-GB');
+    document.getElementById('live-clock').innerHTML = `DATE: ${d}<br>TIME: ${t}`;
+    document.getElementById('dash-date').innerText = `${d} | ${t}`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+function updateAverages() {
+    const n = data.length || 1;
+    const avgImpl = Math.round(data.reduce((s,x)=>s+x.impl,0) / n);
+    const avgTest = Math.round(data.reduce((s,x)=>s+x.test,0) / n);
+    const avgOverall = Math.round((avgImpl + avgTest) / 2);
+    const doneCount = data.filter(x => x.impl===100 && x.test===100).length;
+
+    setText('edit-impl-total', avgImpl + '%');
+    setText('edit-test-total', avgTest + '%');
+    setText('edit-done-total', `${doneCount}/${data.length}`);
+    setText('sys-count-label', data.length + ' SYSTEMS');
+    setText('done-count-label', `${doneCount} DONE`);
+
+    drawGauge('g-impl-path', 'g-impl-val', avgImpl);
+    drawGauge('g-test-path', 'g-test-val', avgTest);
+    drawGauge('g-overall-path', 'g-overall-val', avgOverall);
+}
+
+function drawGauge(pathId, valId, pct) {
+    const circ = 2 * Math.PI * 40;
+    const el = document.getElementById(pathId);
+    const vl = document.getElementById(valId);
+    if (el && vl) {
+        el.style.strokeDasharray = `${(pct/100)*circ} ${circ}`;
+        vl.innerText = pct + '%';
+    }
+}
+
+function setText(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.innerText = val;
+}
+
+function buildEditList() {
+    const list = document.getElementById('systems-list');
+    list.innerHTML = '';
+    data.forEach((sys, i) => {
+        const isDone = sys.impl === 100 && sys.test === 100;
+        const locked = sys.isLocked !== false;
+        const card = document.createElement('div');
+        card.className = 'system-card';
+        card.innerHTML = `
+            <div class="sc-header">
+                <button class="sc-lock-btn ${locked ? '' : 'unlocked'}" onclick="toggleLock(${i})">
+                    ${locked ? '🔒 Locked' : '🔓 Unlocked'}
+                </button>
+                <input class="sc-name-input" type="text" ${locked ? 'disabled' : ''} value="${esc(sys.name)}" oninput="data[${i}].name=this.value; save();">
+                <button class="sc-del-btn" onclick="deleteSystem(${i})">✕</button>
+            </div>
+            <div class="tag-row">
+                <input type="text" class="tag-input" placeholder="Vendor" ${locked ? 'disabled' : ''} value="${esc(sys.vendor)}" oninput="data[${i}].vendor=this.value; save();">
+                <input type="text" class="tag-input" placeholder="Scope" ${locked ? 'disabled' : ''} value="${esc(sys.scope)}" oninput="data[${i}].scope=this.value; save();">
+            </div>
+            <div class="slider-label"><span style="color:var(--grey)">IMPL</span><span id="impl-lbl-${i}">${sys.impl}%</span></div>
+            <input type="range" class="blue-range" ${locked ? 'disabled' : ''} style="--val:${sys.impl}%" min="0" max="100" value="${sys.impl}" oninput="moveSlider(${i},'impl',this)">
+            <div class="slider-label"><span style="color:var(--grey)">TEST</span><span id="test-lbl-${i}">${sys.test}%</span></div>
+            <input type="range" class="orange-range" ${locked ? 'disabled' : ''} style="--val:${sys.test}%" min="0" max="100" value="${sys.test}" oninput="moveSlider(${i},'test',this)">
+            <div class="sc-status-preview ${isDone?'status-done':'status-progress'}" id="sc-status-${i}">${isDone ? '✅ COMPLETED' : '🔄 IN PROGRESS'}</div>`;
+        list.appendChild(card);
+    });
+    updateAverages();
+}
+
+function toggleLock(i) {
+    data[i].isLocked = !data[i].isLocked;
+    buildEditList();
+}
+
+function esc(str) { return String(str).replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+function moveSlider(i, key, el) {
+    data[i][key] = +el.value;
+    el.style.setProperty('--val', el.value + '%');
+    const lblId = key === 'impl' ? `impl-lbl-${i}` : `test-lbl-${i}`;
+    document.getElementById(lblId).innerText = el.value + '%';
+    const isDone = data[i].impl === 100 && data[i].test === 100;
+    const stEl = document.getElementById(`sc-status-${i}`);
+    stEl.className = `sc-status-preview ${isDone ? 'status-done' : 'status-progress'}`;
+    stEl.innerText = isDone ? '✅ COMPLETED' : '🔄 IN PROGRESS';
+    save();
+}
+
+function deleteSystem(i) {
+    if (confirm(`Delete "${data[i].name}"?`)) { data.splice(i, 1); save(); buildEditList(); }
+}
+
+function addSystem() {
+    data.unshift({ name: "New System", impl: 0, test: 0, vendor: "Vendor", scope: "Scope", isLocked: false });
+    save(); buildEditList();
+}
+
+function resetData() {
+    if (confirm("Reset to defaults?")) {
+        data = ["SO-EM_DSP_CSP_PMS_IPTNMS","All RDS","OSSRC ENIQ"].map(n => ({ name: n, impl: 0, test: 0, vendor: "Ericsson", scope: "RAN", isLocked: true }));
+        save(); buildEditList();
+    }
+}
+
+function buildDashboard() {
+    const grid = document.getElementById('cards-grid');
+    grid.innerHTML = '';
+    data.forEach(sys => {
+        const isDone = sys.impl === 100 && sys.test === 100;
+        const card = document.createElement('div');
+        card.className = `dash-card ${isDone ? 'is-done' : 'is-progress'}`;
+        card.innerHTML = `<div class="dc-name">${sys.name}</div><div class="dc-tags"><span class="dc-tag">${sys.vendor}</span><span class="dc-tag">${sys.scope}</span></div>
+            <div class="dc-bar-row"><div class="dc-bar-label"><span>IMPL</span><span>${sys.impl}%</span></div><div class="dc-bar-track"><div class="dc-bar-fill" style="width:${sys.impl}%; background:var(--blue)"></div></div></div>
+            <div class="dc-bar-row"><div class="dc-bar-label"><span>TEST</span><span>${sys.test}%</span></div><div class="dc-bar-track"><div class="dc-bar-fill" style="width:${sys.test}%; background:var(--orange)"></div></div></div>
+            <div class="dc-status ${isDone ? 'status-done' : 'status-progress'}">${isDone ? '✅ COMPLETED' : '🔄 IN PROGRESS'}</div>`;
+        grid.appendChild(card);
+    });
+    updateAverages();
+}
+
+function switchTab(tab) {
+    const isEdit = tab === 'edit';
+    document.getElementById('view-edit').classList.toggle('active', isEdit);
+    document.getElementById('view-dashboard').classList.toggle('active', !isEdit);
+    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', (i===0 && isEdit) || (i===1 && !isEdit)));
+    if (!isEdit) buildDashboard();
+}
+
+function toggleLayout() {
+    currentGrid = currentGrid === 2 ? 3 : 2;
+    document.getElementById('grid-lbl').innerText = currentGrid + '-Col';
+    document.getElementById('cards-grid').className = `cards-grid grid-${currentGrid}`;
+}
+
+async function saveImage() {
+    switchTab('dashboard');
+    await new Promise(r => setTimeout(r, 400));
+    const btn = document.getElementById('save-btn');
+    btn.innerText = '⏳ Generating...';
+    try {
+        const canvas = await html2canvas(document.getElementById('dashboard-canvas'), { backgroundColor: '#16171a', scale: 2 });
+        const link = document.createElement('a');
+        link.download = `OSS-Report-${new Date().getTime()}.png`;
+        link.href = canvas.toDataURL();
+        link.click();
+    } catch (e) { alert('Failed'); }
+    btn.innerText = '💾 Save as Image';
+}
+
+buildEditList();
+</script>
+</body>
+</html>
