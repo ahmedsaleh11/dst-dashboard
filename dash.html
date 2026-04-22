@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<title>OSS DST Dashboard v4.5</title>
+<title>OSS DST Dashboard v5.0 HD</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Barlow+Condensed:wght@700&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
@@ -90,7 +90,7 @@
 
 <div class="topbar">
   <div style="font-family:'Barlow Condensed'; font-weight:700; color:var(--blue)">OSS DST MANAGER</div>
-  <div style="font-size:10px; color:var(--dimgrey)">VERSION 4.5 HD</div>
+  <div style="font-size:10px; color:var(--dimgrey)">VERSION 5.0 HD</div>
 </div>
 
 <div class="tab-row">
@@ -120,7 +120,7 @@
   <div id="dashboard-canvas">
     <div class="brand-header">
       <div class="brand-logo-area">
-        <img src="https://e7.pngegg.com/pngimages/162/10/png-clipart-ericsson-5g-logo-mobile-phones-others-miscellaneous-blue.png" alt="Logo" crossorigin="anonymous">
+        <img src="logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/140x50/1a1b20/4285f4?text=UPLOAD+LOGO'">
       </div>
       <div class="brand-center-info">
         <div class="sys-count-badge" id="sys-count-label">0 SYSTEMS</div><br>
@@ -145,7 +145,7 @@
     <div id="cards-grid" class="cards-grid grid-2"></div>
     
     <div style="padding:15px; text-align:center; font-size:9px; color:var(--dimgrey); border-top:1px solid var(--border); background:#1a1b20;">
-      Etisalat MS Ericsson OSS DST STATUS REPORT • <span id="dash-date"></span>
+      OFFICIAL PROJECT STATUS REPORT • <span id="dash-date"></span>
     </div>
   </div>
 </div>
@@ -180,7 +180,6 @@ function updateAverages() {
   document.getElementById('sys-count-label').innerText = data.length + " SYSTEMS";
   const draw = (id, valId, val) => {
     const circle = document.getElementById(id);
-    if(!circle) return;
     const circum = 2 * Math.PI * 45;
     circle.style.strokeDasharray = `${(val/100)*circum} ${circum}`;
     document.getElementById(valId).innerText = val + "%";
@@ -266,27 +265,24 @@ function resetData() { if(confirm("Clear all?")) { data = DEFAULTS.map(n => ({na
 async function saveImage() {
   const element = document.getElementById('dashboard-canvas');
   
-  // Create a high-res capture container
+  // ULTRA HD SNAPSHOT LOGIC
   const options = {
     backgroundColor: '#16171a',
-    scale: 3, // Increased scale for HD zoom-ability
-    logging: false,
-    useCORS: true, // Crucial for external images/logos
+    scale: 4, // 4x Resolution for crystal clear text
+    useCORS: true,
     allowTaint: true,
-    scrollX: 0,
-    scrollY: -window.scrollY,
-    windowWidth: 1200 // Ensures 2/3 column layout stays large and readable
+    windowWidth: 1400 // Forces the capture to look like a large desktop screen
   };
 
   try {
     const canvas = await html2canvas(element, options);
     const link = document.createElement('a');
     link.download = `OSS-DST-HD-Report.png`;
-    link.href = canvas.toDataURL('image/png', 1.0); // Full quality
+    link.href = canvas.toDataURL('image/png', 1.0);
     link.click();
   } catch (err) {
     console.error("Save error:", err);
-    alert("Image generation failed. Ensure you are using Chrome or Safari and the logo is loaded.");
+    alert("Image generation failed.");
   }
 }
 
