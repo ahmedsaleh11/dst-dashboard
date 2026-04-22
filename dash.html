@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<title>OSS DST Dashboard v5.1 HD+</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Barlow+Condensed:wght@700&display=swap" rel="stylesheet"/>
+<title>OSS DST Dashboard v5.2 XL</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   :root {
@@ -14,104 +14,107 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Barlow', sans-serif; }
-  body { background: var(--bg); color: var(--white); padding-bottom: 100px; }
+  body { background: var(--bg); color: var(--white); padding-bottom: 120px; }
 
-  /* BRANDING HEADER */
+  /* BRANDING HEADER - BIGGER */
   .brand-header {
     background: #1a1b20;
-    padding: 25px 20px;
+    padding: 35px 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 3px solid var(--blue);
+    border-bottom: 5px solid var(--blue);
   }
-  .brand-logo-area { width: 160px; height: 60px; display: flex; align-items: center; justify-content: center; }
+  .brand-logo-area { width: 200px; height: 80px; display: flex; align-items: center; justify-content: center; }
   .brand-logo-area img { max-width: 100%; max-height: 100%; object-fit: contain; }
   
   .brand-center-info { text-align: center; }
-  .sys-count-badge { background: var(--blue); color: #fff; font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: 800; display: inline-block; margin-bottom: 6px; }
+  .sys-count-badge { background: var(--blue); color: #fff; font-size: 14px; padding: 6px 16px; border-radius: 25px; font-weight: 800; display: inline-block; margin-bottom: 8px; }
   
   .brand-title-main { 
     font-family: 'Barlow Condensed'; 
-    font-size: 32px; 
-    font-weight: 800; 
+    font-size: 42px; 
+    font-weight: 900; 
     color: var(--white);
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    line-height: 1;
   }
   .brand-title-main span { color: var(--blue); }
-  .live-time-top { font-family: 'Barlow Condensed'; font-size: 14px; color: var(--grey); text-align: right; line-height: 1.4; }
+  .live-time-top { font-family: 'Barlow Condensed'; font-size: 18px; color: var(--grey); text-align: right; line-height: 1.4; font-weight: 600; }
 
-  /* GAUGE SYSTEM */
-  .gauge-container { display: flex; justify-content: space-around; background: #1a1b20; padding: 20px 10px 40px; border-bottom: 1px solid var(--border); }
-  .gauge-item { text-align: center; position: relative; width: 150px; }
-  .gauge-svg { transform: rotate(-90deg); width: 130px; height: 130px; }
-  .gauge-bg { fill: none; stroke: var(--track); stroke-width: 10; }
-  .gauge-fill { fill: none; stroke-width: 10; stroke-linecap: round; transition: stroke-dasharray 0.6s ease; }
-  .gauge-val { position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); font-family: 'Barlow Condensed'; font-size: 30px; font-weight: 700; }
-  .gauge-label { font-size: 12px; font-weight: 800; color: var(--grey); margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }
+  /* GAUGE SYSTEM - BIGGER */
+  .gauge-container { display: flex; justify-content: space-around; background: #1a1b20; padding: 30px 15px 50px; border-bottom: 1px solid var(--border); }
+  .gauge-item { text-align: center; position: relative; width: 180px; }
+  .gauge-svg { transform: rotate(-90deg); width: 160px; height: 160px; }
+  .gauge-bg { fill: none; stroke: var(--track); stroke-width: 12; }
+  .gauge-fill { fill: none; stroke-width: 12; stroke-linecap: round; transition: stroke-dasharray 0.6s ease; }
+  .gauge-val { position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); font-family: 'Barlow Condensed'; font-size: 40px; font-weight: 800; }
+  .gauge-label { font-size: 14px; font-weight: 800; color: var(--grey); margin-top: 15px; text-transform: uppercase; letter-spacing: 1.5px; }
 
   /* CARDS GRID */
-  .cards-grid { display: grid; gap: 15px; padding: 20px; }
+  .cards-grid { display: grid; gap: 20px; padding: 25px; }
   .grid-2 { grid-template-columns: 1fr 1fr; }
   .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
   .dash-card { 
     background: var(--card); 
     border: 1px solid var(--border); 
-    border-radius: 12px; 
-    padding: 16px; 
+    border-radius: 16px; 
+    padding: 22px; 
     position: relative;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
   }
+  
+  /* LARGER CARD CONTENT */
+  .card-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: var(--white); height: 24px; overflow: hidden; letter-spacing: 0.3px; }
+  .card-tags { display: flex; gap: 8px; margin-bottom: 15px; }
+  .card-tag { font-size: 11px; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 6px; color: var(--grey); font-weight: 700; text-transform: uppercase; }
+  
+  .prog-label-row { font-size: 12px; display: flex; justify-content: space-between; margin-bottom: 6px; font-weight: 800; color: var(--grey); letter-spacing: 0.5px; }
+  .prog-label-row span:last-child { color: var(--white); font-size: 14px; }
+  .prog-bar-bg { height: 8px; background: var(--track); border-radius: 4px; overflow: hidden; margin-bottom: 12px; }
+  
   .dc-status { 
-    font-size: 10px; 
+    font-size: 12px; 
     font-weight: 800; 
     text-align: center; 
-    padding: 6px; 
-    border-radius: 6px; 
-    margin-top: 12px; 
+    padding: 10px; 
+    border-radius: 8px; 
+    margin-top: 15px; 
     border: 1px solid; 
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
   }
-  .status-done { color: var(--green); border-color: var(--green); background: rgba(52,199,89,0.1); }
-  .status-progress { color: var(--orange); border-color: var(--orange); background: rgba(251,188,4,0.1); }
+  .status-done { color: var(--green); border-color: var(--green); background: rgba(52,199,89,0.15); }
+  .status-progress { color: var(--orange); border-color: var(--orange); background: rgba(251,188,4,0.15); }
 
-  /* UI ELEMENTS */
-  .topbar { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
-  .tab-row { display: flex; gap: 8px; padding: 12px 16px; }
-  .tab { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--grey); font-weight: 600; cursor: pointer; }
+  /* UI/EDIT ELEMENTS */
+  .topbar { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+  .tab-row { display: flex; gap: 10px; padding: 15px 20px; }
+  .tab { flex: 1; padding: 15px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--grey); font-weight: 700; cursor: pointer; font-size: 15px; }
   .tab.active { background: var(--blue); border-color: var(--blue); color: var(--white); }
-  .view { display: none; padding: 0 16px; }
+  .view { display: none; padding: 0 20px; }
   .view.active { display: block; }
   
-  /* EDIT MODE STYLES */
-  .edit-kpi-row { display: flex; gap: 10px; margin-bottom: 15px; }
-  .edit-kpi-box { flex: 1; background: var(--surface); border: 1px solid var(--border); padding: 15px; border-radius: 10px; border-left: 5px solid var(--track); }
-  .ek-label { font-size: 11px; color: var(--grey); font-weight: 700; margin-bottom: 4px; }
-  .ek-val { font-size: 28px; font-weight: 800; font-family: 'Barlow Condensed'; }
-  .system-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 15px; }
-  .tag-row { display: flex; gap: 8px; margin: 10px 0 15px 0; }
-  .tag-input { background: var(--bg); border: 1px solid var(--border); color: var(--white); font-size: 12px; padding: 8px; border-radius: 6px; flex: 1; outline: none; }
-  
-  input[type=range] { width: 100%; height: 8px; border-radius: 4px; -webkit-appearance: none; outline: none; margin: 12px 0; cursor: pointer; }
-  input[type=range].blue-range { background: linear-gradient(to right, var(--blue) 0%, var(--blue) var(--val), var(--track) var(--val), var(--track) 100%); }
-  input[type=range].orange-range { background: linear-gradient(to right, var(--orange) 0%, var(--orange) var(--val), var(--track) var(--val), var(--track) 100%); }
+  .edit-kpi-row { display: flex; gap: 15px; margin-bottom: 20px; }
+  .edit-kpi-box { flex: 1; background: var(--surface); border: 1px solid var(--border); padding: 20px; border-radius: 12px; border-left: 6px solid var(--track); }
+  .ek-label { font-size: 12px; color: var(--grey); font-weight: 800; margin-bottom: 6px; }
+  .ek-val { font-size: 36px; font-weight: 800; font-family: 'Barlow Condensed'; }
 
-  .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); padding: 15px; display: flex; gap: 10px; z-index: 200; }
-  .btn { flex: 1; padding: 14px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; }
+  .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); padding: 20px; display: flex; gap: 15px; z-index: 200; }
+  .btn { flex: 1; padding: 16px; border-radius: 14px; border: none; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 16px; }
   .btn-blue { background: var(--blue); color: #fff; }
-  .btn-save { background: var(--track); color: #fff; flex: 0 0 70px; font-size: 24px; border: 1px solid var(--border); }
+  .btn-save { background: var(--track); color: #fff; flex: 0 0 80px; font-size: 30px; border: 1px solid var(--border); }
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <div style="font-family:'Barlow Condensed'; font-weight:700; color:var(--blue); font-size: 18px;">OSS DST MANAGER</div>
-  <div style="font-size:11px; color:var(--dimgrey)">VERSION 5.1 HD+</div>
+  <div style="font-family:'Barlow Condensed'; font-weight:800; color:var(--blue); font-size: 22px; letter-spacing: 1px;">OSS DST MANAGER</div>
+  <div style="font-size: 12px; color:var(--dimgrey); font-weight: 700;">PRO EDITION V5.2 XL</div>
 </div>
 
 <div class="tab-row">
-  <button class="tab active" onclick="switchTab('edit')">✏️ Edit Data</button>
-  <button class="tab" onclick="switchTab('dashboard')">📊 Dashboard View</button>
+  <button class="tab active" onclick="switchTab('edit')">✏️ EDIT DATA</button>
+  <button class="tab" onclick="switchTab('dashboard')">📊 DASHBOARD VIEW</button>
 </div>
 
 <div id="view-edit" class="view active">
@@ -125,9 +128,9 @@
       <div class="ek-val" id="edit-test-total" style="color:var(--orange)">0%</div>
     </div>
   </div>
-  <div style="display:flex; gap:10px; margin-bottom:15px;">
-    <button class="btn btn-blue" onclick="addSystem()">+ New System</button>
-    <button class="btn" style="background:var(--track); color:var(--orange)" onclick="resetData()">Factory Reset</button>
+  <div style="display:flex; gap:10px; margin-bottom:20px;">
+    <button class="btn btn-blue" onclick="addSystem()">+ ADD NEW SYSTEM</button>
+    <button class="btn" style="background:var(--track); color:var(--orange)" onclick="resetData()">FACTORY RESET</button>
   </div>
   <div id="systems-list"></div>
 </div>
@@ -136,7 +139,7 @@
   <div id="dashboard-canvas">
     <div class="brand-header">
       <div class="brand-logo-area">
-        <img src="logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/160x60/1a1b20/4285f4?text=ERICSSON'">
+        <img src="logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/200x80/1a1b20/4285f4?text=ERICSSON'">
       </div>
       <div class="brand-center-info">
         <div class="sys-count-badge" id="sys-count-label">0 SYSTEMS</div><br>
@@ -147,12 +150,12 @@
 
     <div class="gauge-container">
       <div class="gauge-item">
-        <svg class="gauge-svg"><circle class="gauge-bg" cx="65" cy="65" r="55"/><circle id="g-impl-path" class="gauge-fill" cx="65" cy="65" r="55" stroke="var(--blue)" stroke-dasharray="0 345"/></svg>
+        <svg class="gauge-svg"><circle class="gauge-bg" cx="80" cy="80" r="68"/><circle id="g-impl-path" class="gauge-fill" cx="80" cy="80" r="68" stroke="var(--blue)" stroke-dasharray="0 427"/></svg>
         <div class="gauge-val" id="g-impl-val">0%</div>
         <div class="gauge-label">Implementation</div>
       </div>
       <div class="gauge-item">
-        <svg class="gauge-svg"><circle class="gauge-bg" cx="65" cy="65" r="55"/><circle id="g-test-path" class="gauge-fill" cx="65" cy="65" r="55" stroke="var(--orange)" stroke-dasharray="0 345"/></svg>
+        <svg class="gauge-svg"><circle class="gauge-bg" cx="80" cy="80" r="68"/><circle id="g-test-path" class="gauge-fill" cx="80" cy="80" r="68" stroke="var(--orange)" stroke-dasharray="0 427"/></svg>
         <div class="gauge-val" id="g-test-val">0%</div>
         <div class="gauge-label">Testing & Valid.</div>
       </div>
@@ -160,7 +163,7 @@
 
     <div id="cards-grid" class="cards-grid grid-2"></div>
     
-    <div style="padding:20px; text-align:center; font-size:11px; color:var(--dimgrey); border-top:1px solid var(--border); background:#1a1b20; letter-spacing: 1px;">
+    <div style="padding:30px; text-align:center; font-size:14px; color:var(--grey); border-top:1px solid var(--border); background:#1a1b20; letter-spacing: 1.5px; font-weight: 600;">
       OFFICIAL PROJECT STATUS REPORT • <span id="dash-date"></span>
     </div>
   </div>
@@ -196,7 +199,7 @@ function updateAverages() {
   document.getElementById('sys-count-label').innerText = data.length + " SYSTEMS";
   const draw = (id, valId, val) => {
     const circle = document.getElementById(id);
-    const circum = 2 * Math.PI * 55;
+    const circum = 2 * Math.PI * 68;
     circle.style.strokeDasharray = `${(val/100)*circum} ${circum}`;
     document.getElementById(valId).innerText = val + "%";
   };
@@ -212,16 +215,16 @@ function buildEditList() {
     card.className = 'system-card';
     card.innerHTML = `
       <div style="display:flex; justify-content:space-between; align-items:center">
-        <input type="text" style="background:transparent; border:none; border-bottom:1px solid var(--border); color:#fff; font-weight:700; width:85%; font-size:16px;" value="${sys.name}" oninput="data[${i}].name=this.value;save()">
-        <button style="color:var(--orange); background:none; border:none; font-weight:800; cursor:pointer; font-size:18px;" onclick="data.splice(${i},1);save();buildEditList()">✕</button>
+        <input type="text" style="background:transparent; border:none; border-bottom:1px solid var(--border); color:#fff; font-weight:800; width:85%; font-size:18px;" value="${sys.name}" oninput="data[${i}].name=this.value;save()">
+        <button style="color:var(--orange); background:none; border:none; font-weight:800; cursor:pointer; font-size:22px;" onclick="data.splice(${i},1);save();buildEditList()">✕</button>
       </div>
       <div class="tag-row">
-        <input type="text" class="tag-input" placeholder="Vendor" value="${sys.vendor}" oninput="data[${i}].vendor=this.value;save()">
-        <input type="text" class="tag-input" placeholder="Scope" value="${sys.scope}" oninput="data[${i}].scope=this.value;save()">
+        <input type="text" class="tag-input" style="font-size:14px;" placeholder="Vendor" value="${sys.vendor}" oninput="data[${i}].vendor=this.value;save()">
+        <input type="text" class="tag-input" style="font-size:14px;" placeholder="Scope" value="${sys.scope}" oninput="data[${i}].scope=this.value;save()">
       </div>
-      <div style="font-size:12px; display:flex; justify-content:space-between"><span>IMPLEMENTATION</span><span style="color:var(--blue)">${sys.impl}%</span></div>
+      <div style="font-size:14px; font-weight:700; display:flex; justify-content:space-between"><span>IMPLEMENTATION</span><span style="color:var(--blue)">${sys.impl}%</span></div>
       <input type="range" class="blue-range" style="--val:${sys.impl}%" min="0" max="100" value="${sys.impl}" oninput="updateSlider(${i},'impl',this)">
-      <div style="font-size:12px; display:flex; justify-content:space-between"><span>TESTING & VALIDATION</span><span style="color:var(--orange)">${sys.test}%</span></div>
+      <div style="font-size:14px; font-weight:700; display:flex; justify-content:space-between"><span>TESTING & VALIDATION</span><span style="color:var(--orange)">${sys.test}%</span></div>
       <input type="range" class="orange-range" style="--val:${sys.test}%" min="0" max="100" value="${sys.test}" oninput="updateSlider(${i},'test',this)">
     `;
     list.appendChild(card);
@@ -245,15 +248,15 @@ function refreshDashboard() {
     const card = document.createElement('div');
     card.className = 'dash-card';
     card.innerHTML = `
-      <div style="font-size:13px; font-weight:700; margin-bottom:6px; color:var(--white); height:18px; overflow:hidden">${sys.name}</div>
-      <div style="display:flex; gap:5px; margin-bottom:10px">
-        <span style="font-size:9px; background:rgba(255,255,255,0.08); padding:3px 6px; border-radius:4px; color:var(--grey); font-weight:600;">${sys.vendor}</span>
-        <span style="font-size:9px; background:rgba(255,255,255,0.08); padding:3px 6px; border-radius:4px; color:var(--grey); font-weight:600;">${sys.scope}</span>
+      <div class="card-title">${sys.name}</div>
+      <div class="card-tags">
+        <span class="card-tag">${sys.vendor}</span>
+        <span class="card-tag">${sys.scope}</span>
       </div>
-      <div style="font-size:10px; display:flex; justify-content:space-between; margin-bottom:4px; font-weight:700; color:var(--grey)"><span>IMPLEMENTATION</span><span>${sys.impl}%</span></div>
-      <div style="height:5px; background:var(--track); border-radius:3px; overflow:hidden"><div style="width:${sys.impl}%; height:100%; background:var(--blue)"></div></div>
-      <div style="font-size:10px; display:flex; justify-content:space-between; margin-top:8px; margin-bottom:4px; font-weight:700; color:var(--grey)"><span>TESTING</span><span>${sys.test}%</span></div>
-      <div style="height:5px; background:var(--track); border-radius:3px; overflow:hidden"><div style="width:${sys.test}%; height:100%; background:var(--orange)"></div></div>
+      <div class="prog-label-row"><span>IMPLEMENTATION</span><span>${sys.impl}%</span></div>
+      <div class="prog-bar-bg"><div style="width:${sys.impl}%; height:100%; background:var(--blue)"></div></div>
+      <div class="prog-label-row"><span>TESTING</span><span>${sys.test}%</span></div>
+      <div class="prog-bar-bg"><div style="width:${sys.test}%; height:100%; background:var(--orange)"></div></div>
       <div class="dc-status ${isDone ? 'status-done' : 'status-progress'}">${isDone ? 'SUCCESSFULLY DONE' : 'IN PROGRESS'}</div>
     `;
     grid.appendChild(card);
@@ -285,12 +288,12 @@ async function saveImage() {
     scale: 4, 
     useCORS: true,
     allowTaint: true,
-    windowWidth: 1400 
+    windowWidth: 1600 
   };
   try {
     const canvas = await html2canvas(element, options);
     const link = document.createElement('a');
-    link.download = `OSS-DST-Report-Large.png`;
+    link.download = `OSS-DST-XL-Report.png`;
     link.href = canvas.toDataURL('image/png', 1.0);
     link.click();
   } catch (err) { alert("Snapshot failed."); }
